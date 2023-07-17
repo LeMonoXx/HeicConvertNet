@@ -4,24 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HeicConvert"
-        mc:Ignorable="d"
+        mc:Ignorable="d" FontFamily="Calibri"
         MaxHeight="450" MaxWidth="800"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="250" Width="500">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding SelectedFiles, Mode=OneWay}" />
-        <Button x:Name="btnDirectoryBrowser" Click="btnDirectoryBrowser_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" 
-                Width="120" Height="50" Content="Select Files..."/>
+
+            <Label Content="Select files to convert..." FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2"/>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="0 5 0 1">
+            <Label x:Name="lblStatus" FontSize="16" Padding="0"/>
+            <Label x:Name="lblStatusSecondary" FontSize="14" Foreground="Gray" Padding="0"/>
+        </StackPanel>
         
-        <ProgressBar Maximum="100" Value="{Binding Progress, Mode=OneWay}" Grid.Row="1" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
-        <Button Click="Button_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" 
-                Width="120" Height="50" Content="Convert"/>
+        <Button x:Name="btnDirectoryBrowser" Click="btnDirectoryBrowser_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="2" 
+                Width="120" Height="50" Content="Select Files..."/>
+
+        <ProgressBar Maximum="100" Value="{Binding Progress, Mode=OneWay}" Grid.Row="3" Grid.ColumnSpan="4"
+                     Height="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" />
+        
+        <Button Click="Button_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="4" Grid.Column="2" 
+                Width="120" Height="50" Content="Convert" />
     </Grid>
 </Window>

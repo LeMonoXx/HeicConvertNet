@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows;
 
 namespace HeicConvert
@@ -56,11 +55,23 @@ namespace HeicConvert
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if(_selectedFiles != null &&_selectedFiles.Length > 0)
+            {
+                lblStatus.Content = $"Converting {SelectedFiles.Length} files...";
+                lblStatusSecondary.Content = "Please wait just a moment";
+
                 ConvertHelper.ConvertAll(_selectedFiles).Do(progress =>
                 {
                     Progress = progress;
-                }).SubscribeOn(NewThreadScheduler.Default)
+                })
+                .Finally(() => Application.Current.Dispatcher.Invoke(() =>
+                {
+                    lblStatus.Content = $"Done!";
+                    lblStatusSecondary.Visibility = Visibility.Collapsed;
+                }))
+                .SubscribeOn(NewThreadScheduler.Default)
                 .Subscribe();
+            }
+
         }
 
         
@@ -80,7 +91,11 @@ namespace HeicConvert
             var dialogResult = dialog.ShowDialog();
 
             if (dialogResult != null && dialogResult.Value)
+            {
                 SelectedFiles = dialog.FileNames;
+                lblStatus.Content = $"{SelectedFiles.Length} files are ready to get converted!";
+            }
+               
         }
     }
 }
