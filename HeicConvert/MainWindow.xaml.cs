@@ -85,7 +85,9 @@ namespace HeicConvert
             var dialog = new OpenFileDialog()
             {
                 Multiselect = true,
-                Filter = "IPhone Bilddaten (*.heic)|*.heic"
+                Filter = "IPhone Bilddaten (*.heic)|*.heic", 
+                CheckFileExists = true,
+                CheckPathExists = true
             };
 
             var dialogResult = dialog.ShowDialog();
