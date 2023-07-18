@@ -89,14 +89,3 @@ jobs:
       with:
         name: HeicConvertNet
         path: D:\a\HeicConvertNet\HeicConvertNet\release\
-        
-    - name: Install rsync 📚
-      run: | 
-        apt-get update && apt-get install -y rsync
-    
-    - name: Commit release to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
-      with:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         BRANCH: release
-         FOLDER: release
