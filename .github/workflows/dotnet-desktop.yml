@@ -76,12 +76,13 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
-        
+      run: dotnet restore
+      
+    - name: Build the application
+      run: dotnet build --no-restore
+      
     - name: Publish
-      run: dotnet publish $env:Solution_Name -c Release -o release — nologo
+      run: dotnet publish HeicConvert\HeicConvert.csproj -c Release -o release — nologo
       
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
