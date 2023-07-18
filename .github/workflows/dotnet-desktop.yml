@@ -85,7 +85,7 @@ jobs:
       run: dotnet publish HeicConvert\HeicConvert.csproj -c Release -o release
       
     - name: Upload Build Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Application_Artifact
-        path: /home/runner/work/HeicConvertNet/HeicConvert/release/
+        path: HeicConvertNet/HeicConvertNet/release/
