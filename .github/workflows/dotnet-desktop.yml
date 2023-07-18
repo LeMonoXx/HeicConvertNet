@@ -88,4 +88,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: HeicConvertNet_Artifact
-        path: ./build
+        path: D:\a\HeicConvertNet\HeicConvertNet\release\
