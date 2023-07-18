@@ -88,4 +88,11 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: HeicConvertNet
-        path: HeicConvertNet\HeicConvertNet\release\
+        path: D:\a\HeicConvertNet\HeicConvertNet\release\
+        
+    - name: Commit release to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         BRANCH: release
+         FOLDER: release
