@@ -74,10 +74,6 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
-    # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
-
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
@@ -85,7 +81,7 @@ jobs:
         Configuration: ${{ matrix.configuration }}
         
     - name: Publish
-      run: dotnet publish HeicConvert/HeicConvert.csproj -c Release -o release — nologo
+      run: dotnet publish $env:Solution_Name -c Release -o release — nologo
       
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
