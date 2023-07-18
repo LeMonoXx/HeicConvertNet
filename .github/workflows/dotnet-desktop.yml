@@ -87,5 +87,5 @@ jobs:
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: HeicConvertNet_Artifact
-        path: D:\a\HeicConvertNet\HeicConvertNet\release\
+        name: HeicConvertNet
+        path: HeicConvertNet\HeicConvertNet\release\
