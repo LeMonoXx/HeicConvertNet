@@ -95,4 +95,4 @@ jobs:
       with:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          BRANCH: release
-         FOLDER: release
+         FOLDER: D:\a\HeicConvertNet\HeicConvertNet\release\
