@@ -14,6 +14,7 @@ namespace HeicConvert
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private int _progress;
+        private bool _deleteOriginal = true;
         private string[] _selectedFiles;
 
         public MainWindow()
@@ -31,6 +32,20 @@ namespace HeicConvert
             set
             {
                 _progress = value;
+                notifyPropertyChanged();
+            }
+        }
+
+        public bool DeleteOriginal
+        {
+            get
+            {
+                return _deleteOriginal;
+            }
+
+            set
+            {
+                _deleteOriginal = value;
                 notifyPropertyChanged();
             }
         }
@@ -59,7 +74,7 @@ namespace HeicConvert
                 lblStatus.Content = $"Converting {SelectedFiles.Length} files...";
                 lblStatusSecondary.Content = "Please wait just a moment";
 
-                ConvertHelper.ConvertAll(_selectedFiles).Do(progress =>
+                ConvertHelper.ConvertAll(_selectedFiles, deleteOriginalImages: _deleteOriginal).Do(progress =>
                 {
                     Progress = progress;
                 })

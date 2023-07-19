@@ -15,7 +15,7 @@ public static class ConvertHelper
             MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 1.0))
         };
 
-    public static IObservable<int> ConvertAll(string[] allfiles, MagickFormat targetFormat = MagickFormat.Jpeg)
+    public static IObservable<int> ConvertAll(string[] allfiles, MagickFormat targetFormat = MagickFormat.Jpeg, bool deleteOriginalImages = true)
     {
         if(allfiles == null || allfiles.Length == 0)
             return Observable.Empty<int>();
@@ -25,7 +25,7 @@ public static class ConvertHelper
         if(directory == null)
             return Observable.Empty<int>();
 
-        if (!Directory.Exists(Path.Combine(directory, "converted")))
+        if (!deleteOriginalImages && !Directory.Exists(Path.Combine(directory, "converted")))
         {
             Directory.CreateDirectory(Path.Combine(directory, "converted"));
         }
@@ -47,12 +47,22 @@ public static class ConvertHelper
                 using (var image = new MagickImage(info.FullName))
                 {
                     image.Format = targetFormat;
-                    image.Write(Path.Combine(directory, "converted", @$"{info.Name}.jpg"));
+                    var imagePath = string.Empty;
+                    var newImageName = @$"{Path.GetFileNameWithoutExtension(info.Name)}.{targetFormat.ToString().ToLower()}";
+                    
+                    if(!deleteOriginalImages)
+                        imagePath = Path.Combine(directory, "converted", newImageName);
+                    else
+                        imagePath = Path.Combine(directory, newImageName);
+
+                    image.Write(imagePath);
 
                     var ilI = Interlocked.Read(ref i);
                     int progress = (int)(((double)ilI / (double)allfiles.Length) * 100);
                     observer.OnNext((int)progress);
                 }
+
+                info.Delete();
             });
 
             observer.OnCompleted();
